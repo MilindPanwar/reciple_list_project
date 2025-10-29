@@ -8,7 +8,7 @@ import '../model/RecipeListModel.dart';
 
 part 'RecipeListApi.g.dart';
 
-@RestApi(baseUrl: "https://dummyjson.com/recipes)")
+@RestApi(baseUrl: "https://dummyjson.com/recipes")
 abstract class RecipeListApi {
   factory RecipeListApi(Dio dio, {String baseUrl}) = _RecipeListApi;
 
