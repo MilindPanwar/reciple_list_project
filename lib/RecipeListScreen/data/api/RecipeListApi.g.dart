@@ -14,7 +14,7 @@ class _RecipeListApi implements RecipeListApi {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://dummyjson.com/recipes)';
+    baseUrl ??= 'https://dummyjson.com/recipes';
   }
 
   final Dio _dio;
