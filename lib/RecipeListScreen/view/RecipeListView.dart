@@ -19,10 +19,8 @@ class _RecipeListViewState extends State<RecipeListView> {
   void initState() {
     super.initState();
 
-    /// ✅ Load only once when screen opens
     ctrl.loadInitial();
 
-    /// ✅ Proper infinite scroll listener
     scrollCtrl.addListener(() {
       if (scrollCtrl.position.pixels >=
           scrollCtrl.position.maxScrollExtent - 100 &&
@@ -89,7 +87,6 @@ class _RecipeListViewState extends State<RecipeListView> {
             padding: const EdgeInsets.all(10),
             child: NotificationListener<ScrollEndNotification>(
               onNotification: (_) {
-                /// Optional smooth trigger when scroll ends
                 if (scrollCtrl.position.pixels >=
                     scrollCtrl.position.maxScrollExtent - 50 &&
                     ctrl.hasMore.value &&
