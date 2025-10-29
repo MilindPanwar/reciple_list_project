@@ -18,9 +18,7 @@ class _RecipeListViewState extends State<RecipeListView> {
   @override
   void initState() {
     super.initState();
-
     ctrl.loadInitial();
-
     scrollCtrl.addListener(() {
       if (scrollCtrl.position.pixels >=
           scrollCtrl.position.maxScrollExtent - 100 &&
@@ -85,69 +83,58 @@ class _RecipeListViewState extends State<RecipeListView> {
 
           return Padding(
             padding: const EdgeInsets.all(10),
-            child: NotificationListener<ScrollEndNotification>(
-              onNotification: (_) {
-                if (scrollCtrl.position.pixels >=
-                    scrollCtrl.position.maxScrollExtent - 50 &&
-                    ctrl.hasMore.value &&
-                    !ctrl.isLoadingMore.value) {
-                  ctrl.loadMore();
-                }
-                return false;
-              },
-              child: GridView.builder(
-                controller: scrollCtrl,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.8,
-                ),
-                itemCount: ctrl.recipes.length + (ctrl.hasMore.value ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index == ctrl.recipes.length) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-
-                  final RecipeModel recipe = ctrl.recipes[index];
-                  return GestureDetector(
-                    onTap: () => _showRecipeDialog(context, recipe),
-                    child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      clipBehavior: Clip.antiAlias,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: Image.network(
-                              recipe.image,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Container(
-                                color: Colors.orange.shade200,
-                                child: const Icon(Icons.fastfood, size: 50),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              recipe.name,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+            child: GridView.builder(
+              controller: scrollCtrl,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 0.8,
               ),
+              itemCount: ctrl.recipes.length + (ctrl.hasMore.value ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index == ctrl.recipes.length) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                final RecipeModel recipe = ctrl.recipes[index];
+                return GestureDetector(
+                  onTap: () => _showRecipeDialog(context, recipe),
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: Image.network(
+                            recipe.image,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Container(
+                              color: Colors.orange.shade200,
+                              child: const Icon(Icons.fastfood, size: 50),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            recipe.name,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           );
         }),
@@ -217,7 +204,7 @@ class _RecipeListViewState extends State<RecipeListView> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        '⏱ ${recipe.prepTimeMinutes + recipe.cookTimeMinutes} mins | 🍽 ${recipe.servings} servings',
+                        '${recipe.prepTimeMinutes + recipe.cookTimeMinutes} mins | ${recipe.servings} servings',
                         style: const TextStyle(color: Colors.black87),
                       ),
                       const Divider(height: 20),
